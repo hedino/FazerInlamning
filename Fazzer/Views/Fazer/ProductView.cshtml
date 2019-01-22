@@ -1,0 +1,29 @@
+﻿@model Fazzer.ViewModels.ViewViewModel.ProductViewViewModel
+@{
+    ViewBag.Title = "Index";
+}
+<p>
+    @Html.ActionLink("Back to ALL products", "ProductIndex", new { })
+</p>
+<p>
+    @Html.ActionLink("Back to category", "CategoryIndex", new {})
+</p>
+<table class="table">
+    <tr>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>Product Name</td>
+        <td>@Model.Name</td>
+    </tr>
+    <tr>
+        <td>Price</td>
+        <td>@Model.Price Kr</td>
+    </tr>
+    <tr>
+        <td>Description</td>
+        <td>@Model.Description</td>
+    </tr>
+
+</table>

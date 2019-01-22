@@ -1,0 +1,40 @@
+﻿@model Fazzer.ViewModels.ProductIndexViewModel
+@{
+    ViewBag.Title = "Index";
+}
+<p>
+    @Html.ActionLink("Back to categories", "CategoryIndex" ,new { })
+</p>
+<h2>Products</h2>
+
+<table class="table">
+    <tr></tr>
+    @foreach (var item in Model.Products)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Price Kr</td>
+
+            <td>
+                @Html.ActionLink("Edit", "ProductEdit", new { id = item.ProductId }) |
+                @Html.ActionLink("View", "ProductView", new { id = item.ProductId })
+            </td>
+        </tr>
+    }
+</table>
+
+<h1>Search</h1>
+@using (Html.BeginForm("Search", "Product", FormMethod.Get))
+{
+    <table class="table">
+        <tr></tr>
+        <tr>
+            <td>Product</td>
+            <td>
+                @Html.TextBoxFor(p => p.SearchProduct)
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="Search" />
+
+}

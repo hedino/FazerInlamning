@@ -1,0 +1,23 @@
+﻿@model Fazzer.ViewModels.CategoryCreateViewModel
+@{
+    ViewBag.Title = "Index";
+}
+<p>
+    @Html.ActionLink("Back to categories", "CategoryIndex", new { })
+</p>
+@using (Html.BeginForm(FormMethod.Post))
+{
+    <table class="table">
+        <tr>
+        </tr>
+        <tr>
+            <td>Category Name</td>
+            <td>
+                @Html.TextBoxFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name)
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="Save" />
+
+}
