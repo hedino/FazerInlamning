@@ -164,7 +164,7 @@ namespace Fazzer.Controllers
                 db.Products.Add(pro);
                 db.SaveChanges();
             }
-            return RedirectToAction("Index", "ProductIndex", new { id = model.CategoryId });
+            return RedirectToAction("ProductIndex", new { id = model.CategoryId });
         }
 
         //SetUpAvailableCategories För EDIT
@@ -227,7 +227,7 @@ namespace Fazzer.Controllers
                 db.SaveChanges();
             }
 
-            return RedirectToAction("Index", "ProductIndex", new { id = model.CategoryId });
+            return RedirectToAction("ProductIndex", new { id = model.CategoryId });
         }
 
         public ActionResult CategoryView(int id)
