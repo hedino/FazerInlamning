@@ -2,12 +2,21 @@
 @{
     ViewBag.Title = "Index";
 }
-<h2>Index</h2>
+<h2>Products</h2>
 <p>
     @Html.ActionLink("Create New", "ProductCreate")
 </p>
 <table class="table">
-    <tr></tr>
+    <thead>
+        <tr>
+            <th>
+                @Html.ActionLink("Sort Name", "ProductIndex", new { Sort = Model.SortName })
+            </th>
+            <th>
+                @Html.ActionLink("Sort Price", "ProductIndex", new { Sort = Model.SortPrice })
+            </th>
+        </tr>
+    </thead>
     @foreach (var item in Model.Products)
     {
         <tr>
@@ -22,18 +31,3 @@
     }
 </table>
 
-<h1>Search</h1>
-@using (Html.BeginForm("Search", "Product", FormMethod.Get))
-{
-    <table class="table">
-        <tr></tr>
-        <tr>
-            <td>Category</td>
-            <td>
-                @Html.TextBoxFor(p => p.SearchProduct)
-            </td>
-        </tr>
-    </table>
-    <input type="submit" value="Search" />
-
-}

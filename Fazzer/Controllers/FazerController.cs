@@ -8,6 +8,27 @@ namespace Fazzer.Controllers
 {
     public class FazerController : Controller
     {
+
+        public void SortProducts(string sort, ViewModels.ProductIndexViewModel model)
+        {
+            model.SortName = String.IsNullOrEmpty(sort) ? "namedes" : "";
+            model.SortPrice = sort == "price" ? "pricedes" : "price";
+            switch (sort)
+            {
+                case "namedes":
+                    model.Products = model.Products.OrderByDescending(s => s.Name).ToList();
+                    break;
+                case "price":
+                    model.Products = model.Products.OrderBy(s => s.Price).ToList();
+                    break;
+                case "pricedes":
+                    model.Products = model.Products.OrderByDescending(s => s.Price).ToList();
+                    break;
+                default:
+                    model.Products = model.Products.OrderBy(s => s.Name).ToList();
+                    break;
+            }
+        }
         // GET: Category
         public ActionResult CategoryIndex()
         {
@@ -19,12 +40,13 @@ namespace Fazzer.Controllers
                     Name = c.Name,
                     CategoryId = c.CategoryId
                 }));
+
             }
 
             return View(model);
         }
 
-        public ActionResult ProductIndex()
+        public ActionResult ProductIndex(string sort)
         {
             var model = new ViewModels.ProductIndexViewModel();
             using (var db = new Models.FazerDB())
@@ -39,9 +61,44 @@ namespace Fazzer.Controllers
                     
                 }));
             }
-
+            SortProducts(sort, model);
             return View(model);
         }
+
+        [HttpGet]
+        public ActionResult SearchProduct(string searchProduct, string sort)
+        {
+            using (var db = new Models.FazerDB())
+            {
+
+                var model = new ViewModels.ProductIndexViewModel
+                {
+                   SearchProduct = searchProduct
+                };
+                model.Products.AddRange(db.Products.Select(p => new ViewModels.ProductIndexViewModel.ProductListViewModel
+                {
+                    Name = p.Name,
+                    Description = p.Description,
+                    Price = p.Price,
+                    CategoryId = p.CategoryId,
+                    ProductId = p.ProductId
+                }).ToList().Where(c => c.Name.ToLower().Contains(model.SearchProduct.ToLower()) || c.Description.ToLower().Contains(model.SearchProduct.ToLower())
+                    ));
+
+                SortProducts(sort, model);
+                return View("SearchProduct", model);
+            }
+        } 
+
+        //bool Matches(ViewModels.ProductIndexViewModel.ProductListViewModel product, string SearchProduct)
+        //{
+        //    if (!string.IsNullOrEmpty(SearchProduct))
+        //    {
+        //        SearchProduct = SearchProduct.ToLower();
+        //        if (!product.Name.ToLower().Contains(SearchProduct)) return false;
+        //    }
+        //    return true;
+        //}
 
         [HttpGet]
         public ActionResult CategoryCreate()
@@ -230,7 +287,7 @@ namespace Fazzer.Controllers
             return RedirectToAction("ProductIndex", new { id = model.CategoryId });
         }
 
-        public ActionResult CategoryView(int id)
+        public ActionResult CategoryView(int id, string sort)
         {
             var model = new ViewModels.ProductIndexViewModel();
             using (var db = new Models.FazerDB())
@@ -245,11 +302,13 @@ namespace Fazzer.Controllers
 
                 }).Where(p => p.CategoryId == id));
 
+                model.CategoryId = id;
+                SortProducts(sort, model);
                 return View(model);
             }
         }
 
-        public ActionResult ProductView(int id)
+        public ActionResult ProductView(int id, string sort)
         {
             using (var db = new Models.FazerDB())
             {

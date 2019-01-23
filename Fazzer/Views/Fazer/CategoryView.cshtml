@@ -8,7 +8,16 @@
 <h2>Products</h2>
 
 <table class="table">
-    <tr></tr>
+    <thead>
+        <tr>
+            <th>
+                @Html.ActionLink("Sort Name", "CategoryView", new { id = Model.CategoryId, Sort = Model.SortName })
+            </th>
+            <th>
+                @Html.ActionLink("Sort Price", "CategoryView", new { id = Model.CategoryId, Sort = Model.SortPrice })
+            </th>
+        </tr>
+    </thead>
     @foreach (var item in Model.Products)
     {
         <tr>
@@ -22,19 +31,3 @@
         </tr>
     }
 </table>
-
-<h1>Search</h1>
-@using (Html.BeginForm("Search", "Product", FormMethod.Get))
-{
-    <table class="table">
-        <tr></tr>
-        <tr>
-            <td>Product</td>
-            <td>
-                @Html.TextBoxFor(p => p.SearchProduct)
-            </td>
-        </tr>
-    </table>
-    <input type="submit" value="Search" />
-
-}

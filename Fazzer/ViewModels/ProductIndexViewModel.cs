@@ -8,6 +8,10 @@ namespace Fazzer.ViewModels
     public class ProductIndexViewModel
     {
         public string SearchProduct { get; set; }
+        public string SortPrice { get; set; }
+        public string SortName { get; set; }
+        public int CategoryId { get; set; }
+
 
         public ProductIndexViewModel()
         {

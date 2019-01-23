@@ -291,6 +291,7 @@
     <Content Include="Views\Fazer\ProductEdit.cshtml" />
     <Content Include="Views\Fazer\CategoryCreate.cshtml" />
     <Content Include="Views\Fazer\ProductCreate.cshtml" />
+    <Content Include="Views\Fazer\SearchProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
