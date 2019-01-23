@@ -282,7 +282,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Shared\_Layout - Copy.cshtml" />
+    <Content Include="Views\Shared\_Layout_copy.cshtml" />
     <Content Include="Views\Fazer\CategoryIndex.cshtml" />
     <Content Include="Views\Fazer\ProductIndex.cshtml" />
     <Content Include="Views\Fazer\CategoryView.cshtml" />
@@ -292,6 +292,8 @@
     <Content Include="Views\Fazer\CategoryCreate.cshtml" />
     <Content Include="Views\Fazer\ProductCreate.cshtml" />
     <Content Include="Views\Fazer\SearchProduct.cshtml" />
+    <Content Include="Views\Account\AccountIndex.cshtml" />
+    <Content Include="Views\Account\AccountEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

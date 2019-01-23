@@ -79,6 +79,9 @@ namespace Fazzer.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+        [Required]
+        public string Role { get; set; }
+        public List<System.Web.Mvc.SelectListItem> AvailableRole { get; set; }
     }
 
     public class ResetPasswordViewModel
@@ -108,5 +111,33 @@ namespace Fazzer.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+    }
+
+    public class AccountIndexViewModel
+    {
+        public string Name { get; set; }
+        public string Id { get; set; }
+        public string Role { get; set; }
+
+
+        public AccountIndexViewModel()
+        {
+            accounts = new List<AccountListViewModel>();
+        }
+
+        public class AccountListViewModel
+        {
+            public string Id { get; set; }
+            public string Name { get; set; }
+            public string Role { get; set; }
+
+        }
+        public List<AccountListViewModel> accounts { get; set; }
+    }
+    public class AccountEditViewModel
+    {
+            public string Id { get; set; }
+            public string Role { get; set; }
+            public List<System.Web.Mvc.SelectListItem> AvailableRole { get; set; }
     }
 }

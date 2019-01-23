@@ -30,19 +30,3 @@
         </tr>
     }
 </table>
-
-<h1>Search</h1>
-@using (Html.BeginForm("SearchProduct", "Fazer", FormMethod.Get))
-{
-    <table class="table">
-        <tr></tr>
-        <tr>
-            <td>product or description</td>
-            <td>
-                @Html.TextBoxFor(p => p.SearchProduct)
-            </td>
-        </tr>
-    </table>
-    <input type="submit" value="Search" />
-
-}

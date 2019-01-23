@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Fazzer.Models;
+using System.Collections.Generic;
 
 namespace Fazzer.Controllers
 {
@@ -135,11 +136,27 @@ namespace Fazzer.Controllers
         }
 
         //
+        //SetUpAvailableRoles För EDIT
+        void SetupAvailableRoles(Models.RegisterViewModel model)
+        {
+            model.AvailableRole = new List<SelectListItem>
+            {
+                 new SelectListItem {Value = null , Text ="..Choose a role.."},
+                 new SelectListItem {Value = "Admin" , Text ="Admin"},
+                 new SelectListItem {Value = "ProductManager" , Text ="Product manager"},
+
+
+            };
+
+
+        }
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            var model = new RegisterViewModel();
+            SetupAvailableRoles(model);
+            return View(model);
         }
 
         //
@@ -156,7 +173,8 @@ namespace Fazzer.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    var result1 = UserManager.AddToRole(user.Id, model.Role);
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -421,6 +439,83 @@ namespace Fazzer.Controllers
             }
 
             base.Dispose(disposing);
+        }
+
+        // GET: Accounts
+        [Authorize(Roles = "Admin")]
+        public ActionResult AccountIndex()
+        {
+            var model = new Models.AccountIndexViewModel();
+            using (var db = new Models.ApplicationDbContext())
+            {
+                model.accounts.AddRange(db.Users.Select(c => new Models.AccountIndexViewModel.AccountListViewModel
+                {
+                    Name = c.UserName,
+                    Id = c.Id,
+                    
+                }));
+
+            }
+
+            return View(model);
+        }
+
+        //SetUpAvailableRoles För EDIT
+        void SetupAvailableRoles(Models.AccountEditViewModel model)
+        {
+            model.AvailableRole = new List<SelectListItem>
+            {
+                 new SelectListItem {Value = null , Text ="..Choose a role.."},
+                 new SelectListItem {Value = "Admin" , Text ="Admin"},
+                 new SelectListItem {Value = "ProductManager" , Text ="Product manager"},
+
+
+            };
+
+
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public ActionResult AccountEdit(string id)
+        {
+            using (var db = new Models.ApplicationDbContext())
+            {
+
+                var account = db.Users.FirstOrDefault(c => c.Id == id);
+                var rollid = account.Roles.First().RoleId;
+                var rollen = db.Roles.First(r => r.Id == rollid);
+                var model = new Models.AccountEditViewModel
+                {
+                    Role = rollen.Name,
+                    Id = account.Id
+                };
+                SetupAvailableRoles(model);
+                return View(model);
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public ActionResult AccountEdit(Models.AccountEditViewModel model)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            using (var db = new Models.ApplicationDbContext())
+            {
+
+                var account = db.Users.FirstOrDefault(c => c.Id == model.Id);
+                var result1 = UserManager.AddToRole(model.Id, model.Role);
+
+                db.SaveChanges();
+                return RedirectToAction("AccountIndex");
+
+            }
+
         }
 
         #region Helpers

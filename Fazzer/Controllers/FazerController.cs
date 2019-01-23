@@ -88,18 +88,9 @@ namespace Fazzer.Controllers
                 SortProducts(sort, model);
                 return View("SearchProduct", model);
             }
-        } 
+        }
 
-        //bool Matches(ViewModels.ProductIndexViewModel.ProductListViewModel product, string SearchProduct)
-        //{
-        //    if (!string.IsNullOrEmpty(SearchProduct))
-        //    {
-        //        SearchProduct = SearchProduct.ToLower();
-        //        if (!product.Name.ToLower().Contains(SearchProduct)) return false;
-        //    }
-        //    return true;
-        //}
-
+        [Authorize(Roles = "Admin, Manager")]
         [HttpGet]
         public ActionResult CategoryCreate()
         {
@@ -107,6 +98,7 @@ namespace Fazzer.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost]
         public ActionResult CategoryCreate(ViewModels.CategoryCreateViewModel model)
         {
@@ -132,6 +124,7 @@ namespace Fazzer.Controllers
             return RedirectToAction("CategoryIndex");
         }
 
+        [Authorize(Roles = "Admin, Manager")]
         [HttpGet]
         public ActionResult CategoryEdit(int id)
         {
@@ -148,6 +141,7 @@ namespace Fazzer.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost]
         public ActionResult CategoryEdit(ViewModels.CategoryEditViewModel model)
         {
@@ -190,7 +184,9 @@ namespace Fazzer.Controllers
 
         }
 
-        //[Authorize(Roles = "Admin, Manager")]
+
+
+        [Authorize(Roles = "Admin, Manager")]
         [HttpGet]
         public ActionResult ProductCreate()
         {
@@ -200,7 +196,7 @@ namespace Fazzer.Controllers
             return View(model);
         }
 
-        //[Authorize(Roles = "Admin, Manager")]
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost]
         public ActionResult ProductCreate(ViewModels.ProductCreateViewModel model)
         {
@@ -244,6 +240,7 @@ namespace Fazzer.Controllers
 
         }
 
+        [Authorize(Roles = "Admin, Manager")]
         [HttpGet]
         public ActionResult ProductEdit(int id)
         {
@@ -265,6 +262,7 @@ namespace Fazzer.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost]
         public ActionResult ProductEdit(ViewModels.ProductEditViewModel model)
         {

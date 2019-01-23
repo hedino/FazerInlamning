@@ -1,0 +1,23 @@
+﻿@model Fazzer.Models.AccountIndexViewModel
+@{
+    ViewBag.Title = "Index";
+}
+<p>
+    @Html.ActionLink("Back to mainpage", "CategoryIndex", new { })
+</p>
+<h2>Accounts</h2>
+
+<table class="table">
+    @foreach (var item in Model.accounts)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Role</td>
+
+            <td>
+                @Html.ActionLink("Edit", "AccountEdit", new { id = item.Id })
+
+            </td>
+        </tr>
+    }
+</table>

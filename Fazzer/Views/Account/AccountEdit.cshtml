@@ -1,0 +1,23 @@
+﻿@model Fazzer.Models.AccountEditViewModel
+@{
+    ViewBag.Title = "Index";
+}
+<p>
+    @Html.ActionLink("Back to accounts", "AccountIndex", new { })
+</p>
+@using (Html.BeginForm(FormMethod.Post))
+{
+    <table class="table">
+        <tr></tr>
+        <tr>
+            <td>Category Name</td>
+            <td>
+                @Html.HiddenFor(model => model.Id)
+                @Html.DropDownListFor(m => m.Role, Model.AvailableRole)
+               @Html.ValidationMessageFor(model => model.Role)
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="Spara" />
+
+}
